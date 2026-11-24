@@ -1,0 +1,137 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedOwner(userId) {
+      return isSignedIn()
+        && request.auth.token.email_verified == true
+        && request.auth.uid == userId;
+    }
+
+    function isValidPublicCard(data, userId) {
+      return data.keys().hasAll(['uid', 'displayName', 'targetCountry', 'purpose', 'intake', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'displayName', 'targetCountry', 'purpose', 'intake', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid == userId && isValidId(data.uid)
+        && data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 80
+        && data.targetCountry is string && data.targetCountry.size() >= 2 && data.targetCountry.size() <= 64 && data.targetCountry.matches('^[a-z0-9\\-]+$')
+        && data.purpose is string && data.purpose in ['Study', 'Job', 'Apprenticeship', 'Scholarship', 'Research', 'Business', 'Relocation']
+        && data.intake is string && data.intake.size() >= 2 && data.intake.size() <= 40
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidPrivateInfo(data, userId) {
+      return data.keys().hasAll(['uid', 'email', 'preferredLanguage', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'preferredLanguage', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid == userId && isValidId(data.uid)
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 160
+        && data.preferredLanguage is string && data.preferredLanguage in ['en', 'hi', 'ta']
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidJourneyItem(data, userId) {
+      return data.keys().hasAll(['uid', 'title', 'category', 'countrySlug', 'status', 'notes', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'title', 'category', 'countrySlug', 'status', 'notes', 'createdAt', 'updatedAt'])
+        && data.uid is string && data.uid == userId && isValidId(data.uid)
+        && data.title is string && data.title.size() >= 2 && data.title.size() <= 140
+        && data.category is string && data.category in ['Documents', 'Language', 'University', 'Visa', 'Housing', 'Finance']
+        && data.countrySlug is string && data.countrySlug.size() >= 2 && data.countrySlug.size() <= 64 && data.countrySlug.matches('^[a-z0-9\\-]+$')
+        && data.status is string && data.status in ['todo', 'in_progress', 'done', 'archived']
+        && data.notes is string && data.notes.size() <= 600
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    // Connection validation probe (no PII)
+    match /test/connection {
+      allow get: if isSignedIn();
+      allow list, write: if false;
+    }
+
+    // Public non-PII profile card
+    match /users/{userId}/public/card {
+      allow get: if isSignedIn() && isValidId(userId);
+      allow list: if false;
+      allow create: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidPublicCard(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidPublicCard(incoming(), userId)
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'targetCountry', 'purpose', 'intake', 'updatedAt']);
+      allow delete: if isVerifiedOwner(userId) && isValidId(userId);
+    }
+
+    // Private PII user record
+    match /users/{userId}/private/info {
+      allow get: if isVerifiedOwner(userId) && isValidId(userId);
+      allow list: if false;
+      allow create: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidPrivateInfo(incoming(), userId)
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidPrivateInfo(incoming(), userId)
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['email', 'preferredLanguage', 'updatedAt']);
+      allow delete: if isVerifiedOwner(userId) && isValidId(userId);
+    }
+
+    // User-owned abroad journey checklist items
+    match /users/{userId}/journeyItems/{itemId} {
+      allow get: if isVerifiedOwner(userId) && isValidId(userId) && isValidId(itemId);
+      allow list: if isVerifiedOwner(userId) && isValidId(userId) && resource.data.uid == request.auth.uid;
+      allow create: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidId(itemId)
+        && isValidJourneyItem(incoming(), userId)
+        && incoming().status != 'archived'
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isVerifiedOwner(userId)
+        && isValidId(userId)
+        && isValidId(itemId)
+        && isValidJourneyItem(incoming(), userId)
+        && existing().status != 'archived'
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['status', 'updatedAt']) ||
+          incoming().diff(existing()).affectedKeys().hasOnly(['title', 'category', 'countrySlug', 'notes', 'status', 'updatedAt'])
+        );
+      allow delete: if isVerifiedOwner(userId) && isValidId(userId) && isValidId(itemId);
+    }
+  }
+}

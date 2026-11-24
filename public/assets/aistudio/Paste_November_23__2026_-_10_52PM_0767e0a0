@@ -1,0 +1,2361 @@
+MASTER AI DEVELOPMENT PROMPT
+
+Project: AbroadConnect India — India's Global Opportunity Community
+
+Project Type: Full-stack web application, mobile-responsive PWA, future Flutter mobile app
+
+1. Project Vision
+
+Act as a senior full-stack software architect, UI/UX designer, product manager, database engineer, and cybersecurity specialist.
+
+Build a production-oriented, secure, scalable, modern community platform called AbroadConnect India (working name).
+
+The platform connects people across India who are planning to move abroad for higher education, employment, apprenticeships, vocational training, scholarships, research, entrepreneurship, or relocation.
+
+It also connects prospective applicants with verified students, professionals, mentors, and Indian community members already living abroad.
+
+The primary objective is to reduce misinformation, isolation, scams, and fragmented guidance by creating a trusted, structured, country-specific community.
+
+Core principles:
+
+Community-first rather than consultant-first
+
+Free access to essential guidance
+
+Trust, transparency, and verified information
+
+Inclusive of students from all Indian states, cities, and educational backgrounds
+
+Support for English, Hindi, and regional languages
+
+Mobile-first, accessible, Gen Z-friendly experience
+
+No guaranteed visas, admissions, scholarships, or jobs
+
+Privacy and safety by design
+
+Do not create a static demonstration. Build functional screens, database-backed workflows, authenticated APIs, permission checks, and real interactions.
+
+2. Technology Stack
+
+Use the following architecture.
+
+Frontend
+
+Next.js with TypeScript
+
+React
+
+Tailwind CSS
+
+shadcn/ui
+
+Lucide icons
+
+Framer Motion for subtle animations
+
+TanStack Query for server-state management
+
+React Hook Form and Zod for form validation
+
+PWA support for installable mobile experience
+
+Backend
+
+Python FastAPI
+
+PostgreSQL
+
+SQLAlchemy and Alembic
+
+Redis for caching, rate limiting, and temporary state
+
+WebSockets for real-time messaging
+
+Background workers for notifications and asynchronous jobs
+
+Object storage for profile images, documents, and attachments
+
+Authentication and security
+
+Email and mobile OTP authentication through a supported provider
+
+Secure, server-managed sessions or carefully implemented token-based authentication
+
+Role-based and object-level authorization
+
+HTTPS, rate limiting, audit logs, encrypted sensitive data, and secure file uploads
+
+Deployment
+
+Docker
+
+GitHub Actions CI/CD
+
+Managed PostgreSQL
+
+Managed Redis
+
+S3-compatible private object storage
+
+Environment-based configuration
+
+Staging and production environments
+
+Organize the project as a modular monorepo with frontend, backend, database migrations, tests, infrastructure configuration, and documentation.
+
+3. User Roles and Permissions
+
+Implement the following roles with separate permissions.
+
+Role
+
+Main permissions
+
+Guest
+
+Explore public landing pages and limited public resources
+
+Registered Member
+
+Join groups, publish posts, comment, message permitted users, save resources
+
+Verified Member
+
+Display an approved verification badge and access explicitly permitted trust-based features
+
+Abroad Student
+
+Share student experiences and participate in country and university communities
+
+Working Professional
+
+Participate in career communities and share professional experience
+
+Verified Mentor
+
+Publish approved expertise, answer questions, manage mentorship availability
+
+Group Moderator
+
+Moderate assigned groups, review reports, enforce group rules
+
+Resource Editor
+
+Create and update curated guides and resources
+
+Support Agent
+
+Respond to support tickets and assigned grievances
+
+Platform Admin
+
+Manage users, groups, reports, resources, payments, and platform settings
+
+Super Admin
+
+Manage platform-wide permissions, administrators, security, and configuration
+
+Roles can overlap. A verified mentor can also be a group moderator.
+
+Verification status must remain separate from authorization roles. A verification badge must never automatically grant administrative permissions.
+
+All sensitive permissions must be enforced on the backend.
+
+4. Complete Application Screens
+
+A. Public Website
+
+Build the following pages:
+
+Homepage
+
+About the platform
+
+Explore destination countries
+
+Study abroad opportunities
+
+International jobs
+
+Apprenticeships and vocational training
+
+Scholarships
+
+Community discovery
+
+Mentor directory
+
+Public resources and guides
+
+Frequently asked questions
+
+Contact and support
+
+Community guidelines
+
+Privacy policy
+
+Terms of service
+
+Refund and cancellation policy, where applicable
+
+Grievance redressal information
+
+Login
+
+Signup
+
+Passwordless account recovery
+
+Waitlist and early-access registration
+
+Homepage design
+
+Create a premium, modern landing page.
+
+Hero headline:
+
+Your Global Journey Starts With the Right Community.
+
+Supporting text:
+
+Connect with Indian students, professionals, and mentors worldwide. Discover opportunities, ask questions, share experiences, and plan your next chapter abroad.
+
+Primary buttons:
+
+Join the Community
+
+Explore Countries
+
+Homepage sections:
+
+Interactive destination country cards
+
+Find people with similar goals
+
+Trending community discussions
+
+Scholarships and opportunity highlights
+
+How AbroadConnect Works
+
+Verified mentor introductions
+
+Safety and anti-scam information
+
+Success stories with consent
+
+FAQ
+
+Footer with legal and support links
+
+Use authentic, diverse imagery and avoid misleading success statistics or fabricated testimonials.
+
+5. Authentication and Onboarding
+
+Signup flow
+
+Step 1: User chooses email or mobile registration.
+
+Step 2: Send a time-limited OTP.
+
+Step 3: Verify OTP.
+
+Step 4: User accepts Terms of Service and acknowledges Privacy Policy.
+
+Step 5: Create profile.
+
+Step 6: Choose destination countries and goals.
+
+Step 7: Recommend relevant communities.
+
+Step 8: Show personalized dashboard.
+
+OTP requirements
+
+OTP expiry
+
+Resend cooldown
+
+Maximum verification attempts
+
+Abuse and rate-limit protection
+
+Secure storage of OTP verification state
+
+Generic error responses to reduce account enumeration
+
+Optional device/session management
+
+Onboarding profile fields
+
+Personal
+
+Display name
+
+Username
+
+Profile photo
+
+Current country
+
+State
+
+City
+
+Preferred language
+
+Short biography
+
+Education
+
+Highest qualification
+
+Degree or specialization
+
+Graduation year
+
+Institution (optional)
+
+Academic score (optional and private by default)
+
+English-language proficiency
+
+German/French/other language proficiency
+
+Career
+
+Current employment status
+
+Industry
+
+Skills
+
+Experience level
+
+Preferred job categories
+
+Abroad plans
+
+Primary destination country
+
+Secondary destination countries
+
+Purpose: Study, Job, Apprenticeship, Scholarship, Research, Business, Relocation
+
+Intended intake or relocation timeline
+
+Budget range (optional and private by default)
+
+Current application stage
+
+Interested cities and universities
+
+Whether the user wants a mentor
+
+Allow users to skip nonessential fields and update information later.
+
+Do not require government identity documents for ordinary registration.
+
+6. Personalized Member Dashboard
+
+After login, show a personalized dashboard.
+
+Header
+
+Platform logo
+
+Global search
+
+Country selector
+
+Language selector
+
+Notifications
+
+Messages
+
+Profile menu
+
+Sidebar
+
+Home
+
+Explore Countries
+
+My Communities
+
+Discover People
+
+Messages
+
+Opportunities
+
+Scholarships
+
+Universities
+
+Apprenticeships
+
+Resources
+
+Mentors
+
+My Journey
+
+Saved Items
+
+Notifications
+
+Settings
+
+Help and Safety
+
+Dashboard widgets
+
+Welcome message
+
+Profile completion percentage
+
+My target countries
+
+Recommended groups
+
+Latest discussions
+
+Relevant opportunities
+
+Upcoming deadlines
+
+Suggested mentors
+
+My application progress
+
+Saved resources
+
+Community announcements
+
+Recommendation logic should initially use transparent rule-based matching, not an expensive AI system.
+
+7. Country Discovery System
+
+Create destination-specific country hubs.
+
+Initial countries:
+
+Germany
+
+United Kingdom
+
+Canada
+
+United States
+
+Australia
+
+Ireland
+
+France
+
+Netherlands
+
+Italy
+
+Japan
+
+Singapore
+
+New Zealand
+
+Sweden
+
+Finland
+
+Austria
+
+Switzerland
+
+United Arab Emirates
+
+Allow administrators to add countries without changing code.
+
+Each country page must contain:
+
+Overview
+
+Education pathways
+
+Job pathways
+
+Apprenticeships and training
+
+Scholarship information
+
+Language requirements
+
+General visa information
+
+Estimated living-cost resources
+
+Popular cities
+
+Universities and institutions
+
+Community groups
+
+Verified mentors
+
+Relevant discussions
+
+Official government links
+
+Resource update date
+
+Never present estimated living costs, visa requirements, or scholarship eligibility as guaranteed facts.
+
+Country pages must distinguish verified official information from community-contributed advice.
+
+8. Community and Group System
+
+Groups are the central feature of the platform.
+
+Group categories
+
+Country + Purpose
+
+Germany — Master's Students
+
+Germany — Ausbildung
+
+Germany — IT Jobs
+
+UK — Study
+
+Canada — Scholarships
+
+Ireland — Graduate Jobs
+
+Australia — Accommodation
+
+City groups
+
+Berlin Indian Community
+
+Munich Students
+
+London New Arrivals
+
+Dublin Job Seekers
+
+University groups
+
+University-specific applicants
+
+Admitted students
+
+Alumni communities
+
+Timeline groups
+
+Winter 2027 Applicants
+
+Summer 2027 Applicants
+
+Moving Abroad in 2027
+
+Interest groups
+
+IELTS Preparation
+
+German Language Learning
+
+CV and Resume Review
+
+Visa Documentation
+
+Interview Preparation
+
+Housing and Roommates
+
+Travel and Relocation
+
+Group functionality
+
+Implement:
+
+Public groups
+
+Private groups
+
+Invite-only groups
+
+Join requests
+
+Moderator approvals
+
+Group description
+
+Rules
+
+Group banner
+
+Member directory
+
+Pinned announcements
+
+Discussion posts
+
+Comments and replies
+
+Reactions
+
+Polls
+
+Search within groups
+
+Post tags
+
+Attachments
+
+Group notifications
+
+Member mute
+
+Leave group
+
+Report group
+
+Moderator management
+
+Membership limits if configured
+
+Group feed
+
+Posts can include:
+
+Text
+
+Images
+
+Documents
+
+Links
+
+Polls
+
+Questions
+
+Experience stories
+
+Allow:
+
+Edit and delete own posts
+
+Nested comments
+
+Save posts
+
+Share links
+
+Mention users where permitted
+
+Sort by newest, active, or relevant
+
+Filter by unanswered questions
+
+Private group content must not appear in public search results.
+
+9. Real-Time Messaging System
+
+Create a fully functional messaging module.
+
+Direct messages
+
+One-to-one conversations
+
+Message requests from non-connections
+
+Accept or reject requests
+
+Text messages
+
+Emoji reactions
+
+Image attachments
+
+Document attachments
+
+Reply to message
+
+Edit and delete own messages
+
+Read receipts, subject to privacy settings
+
+Typing indicators
+
+Online presence, subject to privacy settings
+
+Conversation search
+
+Block user
+
+Report user or message
+
+Mute notifications
+
+Group chat
+
+Real-time group chat
+
+Group announcements
+
+Moderator-only posting mode
+
+Pinned messages
+
+Shared media
+
+Member permissions
+
+Message reporting
+
+Anti-spam limits
+
+Messaging security
+
+Use authenticated WebSocket connections and server-side authorization for every conversation.
+
+Store messages securely, enforce participant access, validate uploads, and use signed URLs for private attachments.
+
+Do not describe the messaging as end-to-end encrypted unless genuine, independently reviewed E2EE has been implemented.
+
+Moderation access to private messages must be restricted, logged, and based on defined safety workflows, such as user-submitted reports.
+
+10. Discover People and Networking
+
+Create a professional networking and matching system.
+
+Users should discover others based on:
+
+Target country
+
+Target city
+
+Study or work purpose
+
+Degree
+
+Profession
+
+Skills
+
+University
+
+Intended intake
+
+Language
+
+Application stage
+
+Networking features
+
+View member profiles according to privacy settings
+
+Send connection requests
+
+Accept or decline requests
+
+Follow public profiles
+
+Mutual connections
+
+Suggested connections
+
+Start permitted conversations
+
+Share public posts
+
+Display badges
+
+View approved community contributions
+
+Match feature
+
+Implement Find My Abroad Buddy.
+
+Example:
+
+A student from Chennai planning a Master's degree in Germany for Winter 2027 should be able to discover other consenting members with similar plans.
+
+Show a match explanation such as:
+
+"Both of you are targeting Germany, Master's study, and Winter 2027."
+
+Never expose private budget, grades, or personal contact details in matching results.
+
+11. Verified Mentors
+
+Create a mentor discovery and management system.
+
+Mentor types:
+
+International students
+
+Alumni
+
+Working professionals
+
+Apprenticeship participants
+
+Scholarship recipients
+
+Language mentors
+
+Career mentors
+
+Relocation mentors
+
+Mentor profile
+
+Name
+
+Profile photo
+
+Current country and city
+
+Institution or employer, if disclosed
+
+Field of expertise
+
+Languages
+
+Years of relevant experience
+
+Verification status
+
+Mentor biography
+
+Topics covered
+
+Availability
+
+Free or paid sessions, if enabled
+
+Reviews from genuine completed interactions
+
+Mentor verification
+
+Provide a secure application process with:
+
+Mentor application form
+
+Relevant experience evidence
+
+Optional institution or employer verification
+
+Administrative review
+
+Approval or rejection
+
+Verification expiry/review
+
+Badge revocation
+
+Store evidence privately, limit reviewer access, and define retention/deletion rules.
+
+Verification means evidence was reviewed; it must not imply that the platform guarantees the mentor's advice or outcomes.
+
+Mentorship features
+
+Ask a question
+
+Request mentorship
+
+Session scheduling
+
+Session status
+
+Mentor dashboard
+
+Feedback and reviews
+
+Report mentor
+
+Mentor suspension
+
+Start with free mentorship and add paid sessions only when payment and operational requirements are ready.
+
+12. Study Abroad Module
+
+Build a structured study-abroad planning system.
+
+University directory
+
+Fields:
+
+University name
+
+Country
+
+City
+
+Institution type
+
+Official website
+
+Available programs
+
+Program duration
+
+Language of instruction
+
+Published tuition information
+
+Application deadlines
+
+Eligibility requirements
+
+Application method
+
+Source URL
+
+Last verified date
+
+University comparison
+
+Allow users to compare up to five universities based on available, sourced data.
+
+Application tracker
+
+Statuses:
+
+Researching
+
+Shortlisted
+
+Preparing Documents
+
+Applied
+
+Awaiting Decision
+
+Offer Received
+
+Accepted
+
+Visa Preparation
+
+Completed
+
+Rejected or Withdrawn
+
+Add:
+
+Personal notes
+
+Checklist
+
+Deadlines
+
+Reminder preferences
+
+Document status
+
+Application history
+
+Application data must remain private unless explicitly shared.
+
+13. Jobs and Apprenticeship Module
+
+Create separate discovery areas for international jobs and apprenticeships.
+
+Opportunity listing fields
+
+Job title
+
+Employer
+
+Country
+
+City
+
+Employment type
+
+Required experience
+
+Required skills
+
+Language requirements
+
+Salary, if officially disclosed
+
+Visa sponsorship information, if confirmed
+
+Official application URL
+
+Source
+
+Publication date
+
+Expiry date
+
+Verification status
+
+Features
+
+Search and filters
+
+Save opportunity
+
+External application link
+
+Report suspicious listing
+
+Application tracker
+
+Deadline reminders
+
+CV preparation resources
+
+Interview preparation discussions
+
+Apprenticeship-specific information
+
+Program title
+
+Country
+
+Training provider
+
+Duration
+
+Language requirements
+
+Eligibility
+
+Training allowance, if confirmed
+
+Official source
+
+Application process
+
+Never fabricate job vacancies, visa sponsorship, salaries, or eligibility.
+
+Do not allow unverified members to publish paid recruitment offers without appropriate review.
+
+14. Scholarships and Funding
+
+Build a scholarship discovery portal.
+
+Fields:
+
+Scholarship title
+
+Provider
+
+Destination country
+
+Eligible nationalities
+
+Study level
+
+Subject area
+
+Funding coverage
+
+Eligibility
+
+Deadline
+
+Official application URL
+
+Last checked date
+
+Features:
+
+Search
+
+Filters
+
+Save
+
+Share
+
+Deadline reminders
+
+Application checklist
+
+Community discussion
+
+Report outdated information
+
+Clearly distinguish full funding, partial funding, and unspecified funding.
+
+15. Resource Library
+
+Create a centralized knowledge base.
+
+Resource categories:
+
+Country guides
+
+University applications
+
+CV and resume templates
+
+Europass CV guidance
+
+SOP guidance
+
+LOR guidance
+
+Language preparation
+
+Scholarships
+
+Visa documentation
+
+Housing
+
+Banking abroad
+
+Health insurance
+
+Travel preparation
+
+Arrival checklists
+
+Employment rights
+
+Scam prevention
+
+Resource page
+
+Every curated resource should include:
+
+Title
+
+Category
+
+Country
+
+Description
+
+Author/editor
+
+Sources
+
+Last reviewed date
+
+Version history
+
+Report correction button
+
+Allow administrators and resource editors to update content.
+
+Community-contributed resources must be visibly distinguished from official or editorially reviewed resources.
+
+16. My Abroad Journey
+
+Build a personalized planning workspace.
+
+Journey dashboard
+
+Destination
+
+Purpose
+
+Target intake or relocation date
+
+Current stage
+
+Progress checklist
+
+Upcoming deadlines
+
+Saved universities/jobs
+
+Required documents
+
+Personal tasks
+
+Notes
+
+Reminders
+
+Example stages
+
+Explore → Prepare → Apply → Receive Decision → Complete Formalities → Travel → Settle Abroad
+
+Allow custom tasks and user-defined stages.
+
+Do not calculate a misleading "visa approval probability" or promise admission success.
+
+17. Notifications
+
+Support:
+
+In-app notifications
+
+Email notifications
+
+Optional push notifications
+
+User-controlled preferences
+
+Notification events:
+
+New connection request
+
+Accepted connection
+
+New message
+
+Group invitation
+
+Reply to post
+
+Mention
+
+Mentor response
+
+Saved deadline approaching
+
+New relevant resource
+
+Group announcement
+
+Moderation action
+
+Account security alert
+
+Include a notification center, unread count, read/unread state, and notification preferences.
+
+18. Trust, Verification, and Anti-Scam System
+
+This is a critical module.
+
+Verification levels
+
+Email verified
+
+Phone verified
+
+Mentor reviewed
+
+Institution or employment evidence reviewed
+
+Official platform moderator
+
+Avoid a single ambiguous badge that implies every claim about a person has been verified.
+
+Anti-scam features
+
+Report suspicious users
+
+Report posts
+
+Report messages
+
+Block accounts
+
+Restrict new-account messaging
+
+Detect repetitive spam
+
+Flag suspicious external links
+
+Review recruitment-related offers
+
+Prevent public exposure of sensitive documents
+
+Apply graduated enforcement
+
+Flag patterns such as:
+
+Guaranteed visa
+
+Guaranteed job
+
+Pay before interview
+
+Send passport copy privately
+
+Guaranteed scholarship
+
+These are review signals, not automatic proof of fraud.
+
+Privacy protections
+
+Private profile fields
+
+Profile visibility controls
+
+Messaging permissions
+
+Account deletion
+
+Data export
+
+Consent management
+
+Session revocation
+
+Secure document handling
+
+Provide age-appropriate safeguards and a clear policy for underage users. Implement applicable consent and parental requirements where legally necessary.
+
+19. Moderation System
+
+Create a moderation dashboard for assigned moderators.
+
+Moderation queue
+
+Report ID
+
+Reported content
+
+Report category
+
+Reporter
+
+Reported account
+
+Group
+
+Priority
+
+Current status
+
+Assigned moderator
+
+Evidence
+
+Action history
+
+Report categories
+
+Spam
+
+Scam
+
+Fake recruitment
+
+Impersonation
+
+Harassment
+
+Hate or abuse
+
+Privacy violation
+
+Inappropriate content
+
+Misleading information
+
+Other
+
+Moderator actions
+
+Dismiss report
+
+Request additional information
+
+Hide content
+
+Remove content
+
+Warn member
+
+Temporarily restrict account
+
+Suspend account
+
+Ban account
+
+Escalate to administrator
+
+Provide an appeal process, audit logging, and consistent moderation policies.
+
+Apply applicable Indian legal and grievance-handling requirements after review by qualified counsel. Do not hard-code unverified legal deadlines.
+
+20. Admin Dashboard
+
+Build a separate protected admin interface.
+
+Admin navigation
+
+Overview
+
+User Management
+
+Verification Requests
+
+Country Management
+
+Group Management
+
+Posts and Comments
+
+Messaging Safety Reports
+
+Mentors
+
+Universities
+
+Jobs and Apprenticeships
+
+Scholarships
+
+Resource Library
+
+Moderation
+
+Grievances and Support
+
+Payments and Membership
+
+Notifications
+
+Analytics
+
+CMS
+
+Roles and Permissions
+
+Security Audit Logs
+
+Platform Settings
+
+Admin overview metrics
+
+Total registered members
+
+Active members
+
+New registrations
+
+Country distribution
+
+Group membership
+
+Posts and comments
+
+Messages sent (aggregate counts only)
+
+Pending reports
+
+Verification queue
+
+Open support cases
+
+Membership revenue, if enabled
+
+User management
+
+Search and filter users
+
+View account status
+
+Review permitted profile information
+
+Manage roles
+
+Suspend/reinstate accounts
+
+View moderation history
+
+Review verification status
+
+Group management
+
+Create and archive groups
+
+Assign moderators
+
+Approve private group requests where appropriate
+
+Review group reports
+
+Manage categories
+
+Pin announcements
+
+Content management
+
+Add country information
+
+Add official resource links
+
+Publish guides
+
+Review opportunities
+
+Update scholarship records
+
+Schedule announcements
+
+Analytics
+
+Use privacy-respecting aggregate reporting.
+
+Avoid exposing private messages, identity documents, or sensitive user data in general analytics.
+
+21. Membership and Payments
+
+The platform must launch with free membership.
+
+Design the database and UI so paid plans can be enabled later.
+
+Membership structure
+
+Free
+
+Create profile
+
+Join eligible public groups
+
+Read resources
+
+Publish posts
+
+Send permitted messages
+
+Discover opportunities
+
+Verified
+
+Reviewed verification badge
+
+Optional trust-based community access
+
+Premium — future
+
+Enhanced planning tools
+
+Premium curated resources
+
+Mentor session benefits
+
+Advanced alerts
+
+A potential ₹11 introductory membership may be evaluated later, but do not activate payments by default.
+
+Future payment integration
+
+Merchant payment gateway
+
+Server-side order creation
+
+Verified payment webhooks
+
+Idempotent payment processing
+
+Receipts and transaction records
+
+Refund handling
+
+Payment status reconciliation
+
+Tax configuration
+
+Customer support
+
+Transparent pricing
+
+Do not store card numbers or sensitive payment credentials.
+
+Do not use a personal UPI ID as the production membership checkout flow.
+
+22. Search and Recommendations
+
+Build global search for:
+
+Members
+
+Countries
+
+Groups
+
+Universities
+
+Opportunities
+
+Scholarships
+
+Mentors
+
+Posts
+
+Resources
+
+Search features
+
+Search suggestions
+
+Filters
+
+Sorting
+
+Recent searches
+
+Saved searches
+
+Pagination
+
+Empty states
+
+Recommendations
+
+Initially use rule-based matching with:
+
+Target country
+
+Purpose
+
+Timeline
+
+Language
+
+Group membership
+
+User-selected interests
+
+Explain recommendations in plain language.
+
+Do not infer sensitive personal attributes or use private messages for advertising or recommendation profiling.
+
+23. Multilingual Support
+
+Design the application for localization.
+
+Initial languages:
+
+English
+
+Hindi
+
+Tamil
+
+Architecture must support adding:
+
+Bengali
+
+Telugu
+
+Malayalam
+
+Kannada
+
+Marathi
+
+Gujarati
+
+Punjabi
+
+Other Indian languages
+
+Requirements:
+
+Translation dictionaries
+
+Language switcher
+
+Unicode support
+
+Locale-aware dates
+
+Localized notifications
+
+Accessible fonts
+
+Preserve user-generated content in its original language
+
+Do not automatically publish machine-translated legal, visa, or immigration advice without appropriate review.
+
+24. UI/UX Design System
+
+Create a premium social-networking interface inspired by the usability patterns of modern community, professional networking, and discussion platforms, without copying any brand's proprietary designs.
+
+Visual identity
+
+Modern
+
+Minimal
+
+Trustworthy
+
+Youth-oriented
+
+Professional
+
+Friendly
+
+International
+
+Suggested palette
+
+Primary: Deep navy #142B5F
+
+Secondary: Electric blue #2563EB
+
+Accent: Teal #14B8A6
+
+Background: #F8FAFC
+
+Surface: #FFFFFF
+
+Main text: #0F172A
+
+Muted text: #64748B
+
+Support light and dark themes.
+
+Design requirements
+
+Responsive desktop and mobile layouts
+
+Bottom navigation on mobile
+
+Sidebar navigation on desktop
+
+Clean cards
+
+Rounded components
+
+Skeleton loading
+
+Empty states
+
+Toast notifications
+
+Clear form errors
+
+Accessible color contrast
+
+Keyboard navigation
+
+Screen-reader labels
+
+Reduced-motion support
+
+Target WCAG 2.2 AA where practical.
+
+Mobile bottom navigation
+
+Home
+
+Explore
+
+Communities
+
+Messages
+
+Profile
+
+Use a floating create-post action only where it does not interfere with accessibility.
+
+25. Database Architecture
+
+Create normalized PostgreSQL models with appropriate indexes, foreign keys, constraints, and migrations.
+
+Core tables:
+
+Identity
+
+users
+
+profiles
+
+user_roles
+
+roles
+
+permissions
+
+role_permissions
+
+sessions
+
+otp_challenges
+
+user_preferences
+
+user_consents
+
+Geography and interests
+
+countries
+
+cities
+
+user_destination_preferences
+
+user_goals
+
+languages
+
+user_languages
+
+Community
+
+groups
+
+group_categories
+
+group_memberships
+
+group_join_requests
+
+group_rules
+
+posts
+
+post_media
+
+comments
+
+reactions
+
+polls
+
+poll_options
+
+poll_votes
+
+saved_posts
+
+Networking
+
+connections
+
+follows
+
+user_blocks
+
+message_requests
+
+conversations
+
+conversation_participants
+
+messages
+
+message_attachments
+
+message_receipts
+
+Mentorship
+
+mentor_profiles
+
+mentor_applications
+
+mentor_verification_records
+
+mentor_availability
+
+mentor_requests
+
+mentor_sessions
+
+mentor_reviews
+
+Opportunities
+
+universities
+
+university_programs
+
+jobs
+
+apprenticeships
+
+scholarships
+
+opportunity_sources
+
+saved_opportunities
+
+Planning
+
+user_journeys
+
+journey_tasks
+
+application_records
+
+application_events
+
+user_reminders
+
+private_notes
+
+Resources
+
+resources
+
+resource_categories
+
+resource_versions
+
+resource_sources
+
+resource_reviews
+
+Safety
+
+reports
+
+moderation_actions
+
+appeals
+
+grievances
+
+verification_documents
+
+audit_logs
+
+Platform
+
+notifications
+
+notification_preferences
+
+support_tickets
+
+membership_plans
+
+subscriptions
+
+payment_orders
+
+payment_transactions
+
+refunds
+
+feature_flags
+
+platform_settings
+
+Use UUID identifiers, UTC timestamps, soft deletion only where justified, and explicit retention policies.
+
+Create indexes for common country, group, membership, and timeline queries.
+
+26. Backend API Requirements
+
+Use versioned REST endpoints under /api/v1.
+
+Implement API groups for:
+
+/auth
+
+/users
+
+/profiles
+
+/countries
+
+/groups
+
+/posts
+
+/comments
+
+/connections
+
+/conversations
+
+/messages
+
+/mentors
+
+/universities
+
+/jobs
+
+/apprenticeships
+
+/scholarships
+
+/resources
+
+/journeys
+
+/notifications
+
+/reports
+
+/verification
+
+/support
+
+/admin
+
+/payments
+
+Provide OpenAPI documentation.
+
+Every API must include:
+
+Request validation
+
+Authentication where required
+
+Object-level authorization
+
+Pagination where relevant
+
+Consistent error responses
+
+Rate limiting
+
+Logging without leaking secrets
+
+Automated tests
+
+Use WebSockets for authorized real-time message delivery and presence events.
+
+27. Security and Privacy
+
+Implement security as part of the architecture, not as a later addition.
+
+Requirements:
+
+HTTPS
+
+Secure session management
+
+CSRF protection where applicable
+
+XSS prevention
+
+SQL injection prevention
+
+Content Security Policy
+
+CORS restrictions
+
+Secure secrets management
+
+Upload type and size restrictions
+
+Malware scanning for uploads
+
+Private storage buckets
+
+Short-lived signed download URLs
+
+Login and OTP rate limits
+
+Account enumeration protection
+
+Role and object-level permission checks
+
+Admin MFA
+
+Audit trails
+
+Encrypted backups
+
+Backup restoration tests
+
+Data retention and deletion workflows
+
+Incident response procedures
+
+Design privacy and compliance workflows with reference to applicable Indian data protection and intermediary requirements, including the DPDP framework and IT Rules as applicable at launch.
+
+Have legal policies and operational obligations reviewed before production release.
+
+28. Testing and Quality Assurance
+
+Create automated tests for critical workflows.
+
+Authentication
+
+Successful registration
+
+Invalid OTP
+
+Expired OTP
+
+Rate limits
+
+Session expiration
+
+Logout
+
+Account recovery
+
+Community
+
+Join public group
+
+Request private group access
+
+Create post
+
+Comment
+
+Delete own post
+
+Prevent unauthorized deletion
+
+Prevent private content exposure
+
+Messaging
+
+Send and receive messages
+
+Reject unauthorized conversation access
+
+Block user
+
+Report message
+
+Reconnect WebSocket
+
+Prevent duplicate message creation
+
+Admin
+
+Role enforcement
+
+Report review
+
+Account suspension
+
+Verification approval
+
+Audit logging
+
+Security
+
+Cross-user access tests
+
+Broken object-level authorization tests
+
+File upload abuse tests
+
+Rate-limit tests
+
+Sensitive-data exposure checks
+
+Use unit, integration, and end-to-end tests.
+
+29. Development Phases
+
+Phase 1 — Functional MVP
+
+Build:
+
+Landing page
+
+Signup/login with OTP
+
+Profile onboarding
+
+Country selection
+
+Member dashboard
+
+Country/purpose groups
+
+Posts and comments
+
+Group membership
+
+Basic direct messaging
+
+Search
+
+Reporting and blocking
+
+Moderator queue
+
+Admin dashboard
+
+Essential legal and support pages
+
+All features must use persistent database storage.
+
+Phase 2 — Community Growth
+
+Add:
+
+Member discovery
+
+Connection requests
+
+Group chat
+
+Notifications
+
+Saved posts
+
+Improved recommendations
+
+University communities
+
+Mentor applications
+
+Resource library
+
+Multilingual UI
+
+Phase 3 — Abroad Planning
+
+Add:
+
+University directory
+
+Scholarship directory
+
+Job discovery
+
+Apprenticeship directory
+
+Journey tracker
+
+Application checklist
+
+Deadline reminders
+
+Mentor scheduling
+
+Phase 4 — Advanced Platform
+
+Add:
+
+Advanced search
+
+Improved analytics
+
+Optional paid services
+
+Payment integration
+
+Moderation automation
+
+AI-assisted resource discovery
+
+Mobile app APIs
+
+Flutter mobile application
+
+Keep future-phase features behind feature flags rather than presenting nonfunctional buttons.
+
+30. Required Deliverables
+
+Generate the following:
+
+Complete repository structure
+
+Frontend application
+
+Backend FastAPI application
+
+PostgreSQL schema
+
+Alembic migrations
+
+Authentication integration
+
+User profile management
+
+Country and group management
+
+Posts and comments
+
+Messaging
+
+Moderation and reporting
+
+Admin dashboard
+
+Responsive design system
+
+API documentation
+
+Environment configuration examples
+
+Docker configuration
+
+Automated tests
+
+Seed data
+
+Deployment instructions
+
+Security and launch checklist
+
+Important implementation rules
+
+Never hard-code passwords, API keys, or secrets.
+
+Never expose administrative functions through frontend-only role checks.
+
+Do not use fabricated users, opportunities, or testimonials in production.
+
+Seed data must be clearly marked as demonstration data.
+
+Do not claim an external integration works unless it has been configured and tested.
+
+Do not show fake success messages for unsuccessful operations.
+
+Do not use localStorage as the authoritative production database.
+
+Use loading, success, empty, and error states throughout the application.
+
+Implement responsive behavior on mobile, tablet, and desktop.
+
+Keep business logic modular and maintainable.
+
+Use migrations rather than manually editing production database tables.
+
+Provide setup instructions that work from a clean environment.
+
+31. Final Acceptance Criteria
+
+The first release is complete only when:
+
+A new user can register and verify an account.
+
+The user can complete onboarding.
+
+The user can select Germany as a destination and Master's study as a goal.
+
+The system recommends relevant groups.
+
+The user can join a public group.
+
+The user can request access to a private group.
+
+The user can publish and comment on posts.
+
+The user can find another consenting member with a similar goal.
+
+The user can send a permitted direct message.
+
+A recipient can block and report abusive contact.
+
+A moderator can review the report.
+
+An administrator can manage groups and users.
+
+Unauthorized users cannot access private groups, messages, or documents.
+
+Data persists after refresh and server restart.
+
+Automated critical-path tests pass.
+
+The application can be deployed to a staging environment.
+
+Start by generating the system architecture, database schema, application sitemap, design system, and implementation plan. Then build Phase 1 in small, testable modules.
+
+Do not skip security, moderation, accessibility, or privacy requirements.
+
+The final product should feel like a credible international community platform built specifically for Indian students, graduates, job seekers, and professionals preparing for opportunities abroad.

@@ -1,0 +1,137 @@
+{
+  "entities": {
+    "PublicUserCard": {
+      "title": "Public User Card",
+      "description": "Non-PII public community profile card for AbroadConnect India.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "displayName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "targetCountry": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9\\-]+$"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": ["Study", "Job", "Apprenticeship", "Scholarship", "Research", "Business", "Relocation"]
+        },
+        "intake": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 40
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "displayName", "targetCountry", "purpose", "intake", "createdAt", "updatedAt"]
+    },
+    "PrivateUserInfo": {
+      "title": "Private User Info",
+      "description": "Strictly owner-private PII document storing user email and consent flags.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "enum": ["en", "hi", "ta"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email", "preferredLanguage", "createdAt", "updatedAt"]
+    },
+    "JourneyChecklistItem": {
+      "title": "Journey Checklist Item",
+      "description": "Personal study/career abroad preparation checklist milestone.",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 140
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Documents", "Language", "University", "Visa", "Housing", "Finance"]
+        },
+        "countrySlug": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9\\-]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["todo", "in_progress", "done", "archived"]
+        },
+        "notes": {
+          "type": "string",
+          "maxLength": 600
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "title", "category", "countrySlug", "status", "notes", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/public/card": {
+      "schema": { "$ref": "#/entities/PublicUserCard" },
+      "description": "Publicly readable community summary card without PII."
+    },
+    "/users/{userId}/private/info": {
+      "schema": { "$ref": "#/entities/PrivateUserInfo" },
+      "description": "Strictly owner-only private PII document."
+    },
+    "/users/{userId}/journeyItems/{itemId}": {
+      "schema": { "$ref": "#/entities/JourneyChecklistItem" },
+      "description": "User-owned abroad journey checklist items synced across devices."
+    }
+  }
+}
